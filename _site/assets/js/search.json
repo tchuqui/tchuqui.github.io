@@ -1,12 +1,3 @@
 [
   
-  {
-    "title"       : "Utilizando o Git em projetos SSIS",
-    "url"         : "/utilizando-o-git-em-projetos-SSIS",
-    "categories"  : "SSIS",
-    "tags"        : "git, ssis",
-    "date"        : "2024-08-25 07:00:00 -0400",
-    "description" : "Já precisou versionar seus projetos de SSIS? Você pode utilziar o GIT para esta função e trabalhar em equipe nas customizações de projetos de fluxos de cargas utilizando o SSIS. Vou te mostrar como configurar de forma simples neste artigo"
-  }
-  
 ]
