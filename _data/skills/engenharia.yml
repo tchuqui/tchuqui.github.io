@@ -1,0 +1,11 @@
+- brand: Apache Nifi
+  name: Apache Nifi
+  color: 7a86b8
+
+- brand: SSIS
+  name: SSIS
+  color: 006866
+
+- brand: apachekafka
+  name: Apache Kafka
+  color: e97104

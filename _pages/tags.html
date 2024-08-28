@@ -1,0 +1,13 @@
+---
+title: Tags
+permalink: /tags
+---
+
+<span id="tags">
+  {% assign tags = site.tags | sort %}
+
+  {% for tag in tags %}
+    {% capture tag_name %}{{ tag | first }}{% endcapture %}
+    <p><a href="{{ 'tag/' | absolute_url }}{{ tag_name | slugify }}">{{ tag_name }}</a></p>
+  {% endfor %}
+</span>

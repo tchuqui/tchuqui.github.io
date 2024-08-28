@@ -1,0 +1,127 @@
+# Site settings
+url: "https://tchuqui.github.io" # the base hostname & protocol for your site, e.g. https://USERNAME.github.io
+baseurl: "" # the subpath of your site, e.g. /blog
+
+# Change to your lang - This doesn't translate the theme, it just defines the main language the content is written in.
+lang: pt-BR
+
+timezone: America/Campo_Grande # Change to your timezone - https://kevinnovak.github.io/Time-Zone-Picker/
+
+title: Thadeu Chuqui
+tagline: Database Administrator | Data Engineer
+description: Um blog sobre dicas de Banco de Dados e Engenharia de Dados.
+avatar: "assets/img/avatar/avatar.jpg" # The avatar on sidebar
+
+# Social profiles
+email: tchuqui@gmail.com
+github: tchuqui
+linkedin: thadeuchuqui
+mastodon:
+  instance: mastodon.social
+  user: tchuqui
+instagram: tchuqui1
+youtube: thadeuchuqui
+
+disqus-username: https-tchuqui-github-io
+
+# Build settings
+kramdown:
+  syntax_highlighter: rouge
+  syntax_highlighter_opts: # Rouge Options - https://github.com/jneen/rouge#full-options
+    css_class: highlight
+    default_lang: console
+    span:
+      line_numbers: false
+    block:
+      line_numbers: false
+      start_line: 1
+
+plugins:
+  - jekyll-toc
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-minifier
+  - jekyll-paginate-v2
+
+toc:
+  min_level: 2
+  max_level: 2
+
+jekyll-minifier:
+  exclude: "atom.xml"
+  uglifier_args:
+    harmony: true
+
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: "default"
+      toc: true
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+      permalink: /:title
+  - scope:
+      path: ""
+      type: pages
+    values:
+      layout: "page"
+
+exclude:
+  - "*.gem"
+  - "*.gemspec"
+  - tools
+  - README.md
+  - LICENSE
+  - rollup.config.js
+  - package*.json
+  - .gitignore
+  - .editorconfig
+
+include:
+  - _pages
+
+pagination:
+  enabled: true
+  sort_reverse: true
+  per_page: 20
+  permalink: '/page/:num/'
+  title: ':title - Página :num'
+  trail:
+    before: 2
+    after: 2
+
+autopages:
+  enabled: true
+  categories:
+    layouts:
+      - 'autopage_category.html'
+    title: 'Posts na categoria :cat'
+    permalink: '/category/:cat'
+    silent: false
+    slugify:
+      mode: 'default'   # :cat is slugified. Modes: default, raw, pretty, ascii, latin
+      case: false       # Whether to replace all uppercase letters with their lowercase counterparts
+
+  tags:
+    layouts:
+      - 'autopage_tags.html'
+    title: 'Posts com a tag :tag' # :tag is replaced by the tag name
+    permalink: '/tag/:tag'
+    silent: false
+    slugify:
+      mode: 'default'   # :tag is slugified.
+      case: false
+
+  collections:
+    layouts:
+      - 'autopage_collection.html'
+    title: 'Posts na coleção :coll' # :coll is replaced by the collection name
+    permalink: '/collection/:coll'
+    silent: false
+    slugify:
+      mode: 'default'   # :coll is slugified.
+      case: false

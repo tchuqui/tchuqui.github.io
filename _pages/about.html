@@ -1,0 +1,51 @@
+---
+title: Sobre
+permalink: /about
+---
+
+<section>
+  <p>Meu nome é Thadeu Chuqui</p>
+  <p>Atualmente atuo como DBA e Engenheiro de Dados.</p>
+</section>
+
+<!-- Fill in the information in _data/skills.yml -->
+
+<section>
+  <h2 class="mb-5">Banco de Dados</h2>
+  <div class="skills">
+    {% for skill in site.data.skills.databases %}
+    <div class="skills-items">
+      <img src="https://img.shields.io/badge/{{skill.name}}-{{skill.color}}?style=flat&logo={{skill.brand}}&logoColor=white" alt="{{skill.name}}" title="{{skill.name}}">
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+<section>
+  <h2 class="mb-5">Engenharia de Dados</h2>
+  <div class="skills">
+    {% for skill in site.data.skills.engenharia %}
+    <div class="skills-items">
+      <img src="https://img.shields.io/badge/{{skill.name}}-{{skill.color}}?style=flat&logo={{skill.brand}}&logoColor=white" alt="{{skill.name}}" title="{{skill.name}}">
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+<section>
+  <h2 class="mb-5">Sistemas e Ferramentas</h2>
+  <div class="skills">
+    {% for skill in site.data.skills.applications %}
+    <div class="skills-items">
+      <img src="https://img.shields.io/badge/{{skill.name}}-{{skill.color}}?style=flat&logo={{skill.brand}}&logoColor=white" alt="{{skill.name}}" title="{{skill.name}}">
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+<section>
+  <h2 class="mb-5">Contato e Redes Sociais</h2>
+  <div class="contacts-social-icons">
+    {% include social-icons.html %}
+  </div>
+</section>
