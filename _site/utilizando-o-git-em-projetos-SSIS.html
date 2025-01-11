@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <title>Utilizando o Git em projetos SSIS | Thadeu Chuqui</title>
+  <meta name="description" content="Já precisou versionar seus projetos de SSIS? Você pode utiliziar o GIT para esta função e trabalhar em equipe nas customizações de projetos de fluxos de cargas utilizando o SSIS. Vou te mostrar como configurar de forma simples neste artigo">
+  
+
+  <meta name="author" content="Thadeu Chuqui">
+
+  <link rel="canonical" href="https://tchuqui.github.io/utilizando-o-git-em-projetos-SSIS">
+
+  <!-- SEO Tags OpenGraph -->
+<meta property="og:site_name" content="Thadeu Chuqui">
+<meta property="og:url" content="https://tchuqui.github.io/utilizando-o-git-em-projetos-SSIS">
+
+<meta name="twitter:card" content="summary">
+<meta property="twitter:url" content="https://tchuqui.github.io/utilizando-o-git-em-projetos-SSIS">
+
+
+<meta property="og:title" content="Utilizando o Git em projetos SSIS | Thadeu Chuqui">
+<meta name="twitter:title" content="Utilizando o Git em projetos SSIS | Thadeu Chuqui">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:description" content="Já precisou versionar seus projetos de SSIS? Você pode utiliziar o GIT para esta função e trabalhar em equipe nas customizações de projetos de fluxos de cargas utilizando o SSIS. Vou te mostrar como configurar de forma simples neste artigo">
+<meta property="og:image" content="https://tchuqui.github.io/assets/img/2024-08-25-utilizando-o-git-em-projetos-SSIS/ssis_git.png">
+<meta name="twitter:image" content="https://tchuqui.github.io/assets/img/2024-08-25-utilizando-o-git-em-projetos-SSIS/ssis_git.png">
+<meta name="twitter:description" content="Já precisou versionar seus projetos de SSIS? Você pode utiliziar o GIT para esta função e trabalhar em equipe nas customizações de projetos de fluxos de cargas utilizando o SSIS. Vou te mostrar como configurar de forma simples neste artigo">
+<meta name="publish_date" property="og:publish_date" content="2025-01-10T07:00:00-04:00">
+
+
+
+  <link type="application/atom+xml" rel="alternate" href="https://tchuqui.github.io/feed.xml" title="Thadeu Chuqui" />
+
+  <!-- Favicon < Generated with: https://www.favicon-generator.org/ > -->
+<link rel="apple-touch-icon" sizes="57x57" href="https://tchuqui.github.io/assets/img/favicon/apple-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="180x180" href="https://tchuqui.github.io/assets/img/favicon/apple-icon-180x180.png">
+<link rel="apple-touch-icon" sizes="16x16" href="https://tchuqui.github.io/assets/img/favicon/apple-icon.png">
+<link rel="icon" type="image/webp" sizes="192x192" href="https://tchuqui.github.io/assets/img/favicon/android-icon-192x192.png">
+<link rel="icon" type="image/webp" sizes="36x26" href="https://tchuqui.github.io/assets/img/favicon/android-icon-36x36.png">
+<link rel="icon" type="image/webp" sizes="32x32" href="https://tchuqui.github.io/assets/img/favicon/favicon-32x32.png">
+<link rel="icon" type="image/webp" sizes="96x96" href="https://tchuqui.github.io/assets/img/favicon/favicon-96x96.png">
+<link rel="icon" type="image/webp" sizes="16x16" href="https://tchuqui.github.io/assets/img/favicon/favicon-16x16.png">
+<link rel="shortcut icon" href="https://tchuqui.github.io/assets/img/favicon//favicon.ico" type="image/x-icon">
+<link rel="manifest" href="https://tchuqui.github.io/assets/img/favicon/manifest.json">
+
+
+  <!-- Bootstrap -->
+  <link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  </noscript>
+
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"
+    async
+    defer
+  ></script>
+
+  <!-- Font Awesome -->
+  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" as="style"
+    onload="this.onload=null;this.rel='stylesheet'"
+    integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <noscript>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+      integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+      crossorigin="anonymous" referrerpolicy="no-referrer" />
+  </noscript>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap"
+    rel="stylesheet">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="https://tchuqui.github.io/assets/css/main.css">
+
+  <!-- JS -->
+  <script src="https://tchuqui.github.io/assets/js/scripts.js" defer></script>
+
+  
+</head>
+
+
+<body>
+
+  <nav class="navbar" aria-label="Navbar">
+  <div class="p-0">
+    <div class="container-fluid d-flex justify-content-start">
+      <button class="navbar-toggler text-light" onclick="toggleMenu()" aria-label="Toggle Navbar">
+        <i class="fa-solid fa-bars fs-2"></i>
+      </button>
+    </div>
+  </div>
+  <div>
+    <a href="https://tchuqui.github.io/" aria-label="Titulo do Site">
+      <h2 class="">Thadeu Chuqui</h2>
+    </a>
+  </div>
+  <div>
+    <a href="https://tchuqui.github.io/search" aria-label="Pesquisar"><i class="fa-solid fa-magnifying-glass"></i></a>
+  </div>
+</nav>
+
+  <aside id="sidebar" class="sidebar">
+  <header class="sidebar-header">
+    <a href="https://tchuqui.github.io/"><img src="https://tchuqui.github.io/assets/img/avatar/avatar.jpg" alt="avatar" class="avatar"
+        loading="lazy"></a>
+    <h2><a href="https://tchuqui.github.io/" aria-label="Website Title">Thadeu Chuqui</a></h2>
+    <p class="tagline">Database Administrator | Data Engineer</p>
+  </header>
+
+  <nav class="sidebar-nav">
+    <ul>
+      <li><a href="https://tchuqui.github.io/"><i class="fa-solid fa-house"></i> Home</a></li>
+      <li><a href="https://tchuqui.github.io/search" aria-label="Pesquisar"><i class="fa-solid fa-magnifying-glass"></i> Pesquisar</span></li>
+      <li><a href="https://tchuqui.github.io/about"><i class="fa-solid fa-circle-info"></i> Sobre</a>
+      </li>
+    </ul>
+  </nav>
+
+  <div class="sidebar-icons-actions">
+    <div class="sidebar-social-icons">
+      <ul>
+  <li>
+    <a href="https://github.com/tchuqui" target="_blank" aria-label="GitHub">
+      <i class="fa-brands fa-github"></i>
+    </a>
+  </li>
+  <li>
+    <a href="https://www.youtube.com/@thadeuchuqui" target="_blank" aria-label="YouTube">
+      <i class="fa-brands fa-square-youtube"></i></i>
+    </a>
+  </li>
+  <li>
+    <a rel="me" href="https://mastodon.social/@tchuqui" target="_blank" aria-label="Mastodon">
+      <i class="fa-brands fa-mastodon"></i>
+    </a>
+  </li>
+  <li>
+    <a href="https://www.linkedin.com/in/thadeuchuqui" target="_blank" aria-label="LinkedIn">
+      <i class="fa-brands fa-linkedin"></i>
+    </a>
+  </li>
+  <li>
+    <a href="https://instagram.com/tchuqui1" target="_blank" aria-label="Instagram">
+      <i class="fa-brands fa-square-instagram"></i></i>
+    </a>
+  </li>
+  <li>
+    <a href="mailto:tchuqui@gmail.com" target="_blank" aria-label="Email">
+      <i class="fa-solid fa-envelope"></i>
+    </a>
+  </li>
+</ul>
+    </div>
+
+  <footer class="sidebar-footer">
+    <p>
+      <a href="" target="_blank"></a>
+      <i>&bull;</i>
+      <span id="currentYear">2025</span>
+    </p> 
+    <p>Made with <a href="https://jekyllrb.com/" target="_blank">Jekyll</a></p>
+    <p><a href="https://github.com/brunogasparetto/brunogasparetto.github.io" target="_blank">Jekyll Gasparetto Theme</a></p>
+  </footer>
+
+</aside>
+
+  <span id="back-to-top"></span>
+
+  <main class="main-content hidden-animation">
+  <article>
+    <header>
+      <h1 class="post-title">Utilizando o Git em projetos SSIS</h1>
+      <div class="post-meta">
+        <span>
+          <span>
+            Publicado em <time>10/01/2025</time>
+          </span>
+          <i>&bull;</i>
+          <span class="reading-time" title="Reading Time">
+  
+   8 min  de leitura </span>
+          <i>&bull;</i>
+          <span class="post-categories">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="25" fill="currentColor" class="bi bi-archive"
+              viewBox="0 0 16 16">
+              <path
+                d="M0 2a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1v7.5a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 1 12.5V5a1 1 0 0 1-1-1zm2 3v7.5A1.5 1.5 0 0 0 3.5 14h9a1.5 1.5 0 0 0 1.5-1.5V5zm13-3H1v2h14zM5 7.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5" />
+            </svg>
+            <span>
+  
+  
+  <a href="https://tchuqui.github.io/category/ssis">Ssis</a>
+  
+  
+</span>
+
+          </span>
+        </span>
+      </div>
+
+      
+        <figure class="post-banner">
+          <img src="https://tchuqui.github.io/assets/img/2024-08-25-utilizando-o-git-em-projetos-SSIS/ssis_git.png" alt="Utilizando o Git em projetos SSIS" loading="lazy">
+          
+        </figure>
+      
+
+    </header>
+
+    <section class="content content-post">
+      <p>Neste artigo do <a href="https://tchuqui.github.io/">blog</a> vou mostrar de maneira fácil como é possível integrar o seu projeto SSIS (SQL Server Integration Service) com engranagens de versionamento (github, gitlab, bitbucket e outros).</p>
+
+<h2 id="o-que-é-o-git">O que é o GIT?</h2>
+
+<p>O <a href="https://git-scm.com/">git</a> é um sistema de controle de versão de “código fonte”, desenvolvido para projetar programas de pequeno à grande porte com velocidade e eficiência. O git segue a linha de “código aberto”, apoio da comunidade e foi desenvolvido por <code class="language-console highlighter-rouge"><span class="go">Linus Torvalds</span></code>, o criador do sistema operacional <a href="https://www.linux.org/">Linux</a>.</p>
+
+<blockquote>
+  <p>A ferramenta é disponibilizada gratuitamente para o publico</p>
+</blockquote>
+
+<h2 id="versionamento">Versionamento</h2>
+
+<p>Uma ferramenta de versionamento controla cada alteração com atualizações criptografadas, que são salvas em um servidor formando um histórico imutável e permanente das versões. Este mecanismo é uma alternativa eficiente de backup e agilidade para o “código fonte”, evitando desastres como a perda de código entre as equipes.</p>
+
+<blockquote>
+  <p>Vale ressaltar que é de fácil aprendizagem e utilização.</p>
+</blockquote>
+
+<h2 id="ssis-sql-server-integration-services">SSIS (SQL Server Integration Services)</h2>
+
+<p>A grande vantagem de vincular o versionamento em projetos SSIS é que você pode utilizar qualquer máquina para desenvolver, não ficando dependente de estações de trabalho e servidores para avançar.</p>
+
+<p>Em grandes projetos, com o <strong>git</strong> configurado corretamente no <a href="https://code.visualstudio.com/"><strong>Visual Studio</strong></a>, mais de um profissional pode atuar simultaneamente em uma <code class="language-console highlighter-rouge"><span class="go">solution</span></code> e aumentar com isso a produtividade da equipe.</p>
+
+<p>Vale lembrar que a base dos arquivos do visual studio é o <code class="language-console highlighter-rouge"><span class="go">xml</span></code>, portanto é possível versionar e desmembrar versões do seu código utilizando branchs.</p>
+
+<p>Vamos lá?</p>
+
+<p class="bubble-note">Vamos considerar o Visual Studio, a feature do SSIS e o git já instalados em sua máquina para seguir com o Tutorial</p>
+
+<h2 id="tutorial">Tutorial</h2>
+
+<h3 id="preparação-do-gitlab">Preparação do Gitlab</h3>
+
+<p>Inicialmente devemos criar um projeto na engranagem de versionamento de sua preferência. Vamos utilizar como exemplo o <a href="https://about.gitlab.com/">gitlab</a></p>
+
+<p><img src="/assets/img/2024-08-25-utilizando-o-git-em-projetos-SSIS/2025-01-07_08-36.png" alt="Novo Projeto" /></p>
+
+<p>Coloque o nome do projeto e automaticamente ele vai gerar o slug do projeto. Depois siga clicando em <strong>Create Project</strong></p>
+
+<p><img src="/assets/img/2024-08-25-utilizando-o-git-em-projetos-SSIS/2025-01-07_08-38.png" alt="Criar Projeto" /></p>
+
+<p>Clique em <code class="language-console highlighter-rouge"><span class="go">Code</span></code> na marcação 1 e depois copie o endereço na marcação 2</p>
+
+<p><img src="/assets/img/2024-08-25-utilizando-o-git-em-projetos-SSIS/2025-01-07_09-15.png" alt="Copiar o endereço do projeto" /></p>
+
+<h3 id="preparação-do-diretório">Preparação do diretório</h3>
+
+<p>Crie um diretório em sua máquina com o nome “ETL_SSIS”</p>
+
+<p><img src="/assets/img/2024-08-25-utilizando-o-git-em-projetos-SSIS/2025-01-07_09-49.png" alt="Criar pasta" style="max-width: 756px" /></p>
+
+<p>Clique com o botão direito do mouse na pasta ETL_SSIS e escolha a opção marcada na imagem abaixo:</p>
+
+<p><img src="/assets/img/2024-08-25-utilizando-o-git-em-projetos-SSIS/2025-01-07_10-01.png" alt="Abrir o Git" style="max-width: 756px" /></p>
+
+<p>Notem que um terminal do git é aberto a partir do diretório <strong>ETL_SSIS</strong>.</p>
+
+<p><img src="/assets/img/2024-08-25-utilizando-o-git-em-projetos-SSIS/2025-01-07_10-04.png" alt="Terminal Git" style="max-width: 556px" /></p>
+
+<h3 id="vincular-o-diretório-ao-gitlab">Vincular o diretório ao Gitlab</h3>
+
+<p>Agora vamos fazer este diretório ter uma ligação com o projeto <code class="language-console highlighter-rouge"><span class="go">importCSVtoTable</span></code> criado no <strong>gitlab</strong> anteriormente.</p>
+
+<p>Digite no terminal</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code><table class="rouge-table"><tbody><tr><td class="rouge-gutter gl"><pre class="lineno">1
+</pre></td><td class="rouge-code"><pre>git clone https://[servidor gitlab]/etl_ssis/importcsvtotable.git
+</pre></td></tr></tbody></table></code></pre></div></div>
+<p>Com este comando, o git vai versionar o repositório existente com o projeto <code class="language-console highlighter-rouge"><span class="go">importCSVtoTable</span></code>, baixando todos os arquivos e criando a pasta <strong>importcsvtotable</strong> com inicialmente o arquivo README.md e a pasta oculta .git</p>
+
+<p><img src="/assets/img/2024-08-25-utilizando-o-git-em-projetos-SSIS/2025-01-07_10-56.png" alt="Git Clone" style="max-width: 556px" /></p>
+
+<h3 id="criação-do-projeto-no-visual-studio">Criação do projeto no Visual Studio</h3>
+
+<p>Agora vamos criar um projeto SSIS no Visual Studio</p>
+
+<p><img src="/assets/img/2024-08-25-utilizando-o-git-em-projetos-SSIS/2025-01-07_11-06.png" alt="Abrir Visual Studio" style="max-width: 656px" /></p>
+
+<p>no marcador 1 filtre por SSIS e depois clique <strong>Integration Services Project</strong></p>
+
+<p><img src="/assets/img/2024-08-25-utilizando-o-git-em-projetos-SSIS/2025-01-07_11-08.png" alt="Criar Projeto SSIS" style="max-width: 856px" /></p>
+
+<p>Insira um nome para o Projeto e selecione o repositório que versionamos nos passos anteriores, depois clique em <strong>Criar</strong></p>
+
+<p><img src="/assets/img/2024-08-25-utilizando-o-git-em-projetos-SSIS/2025-01-07_11-12.png" alt="Criar Projeto" /></p>
+
+<h3 id="entendendo-o-uso-do-git-no-visual-studio">Entendendo o uso do git no Visual Studio</h3>
+
+<p>Ao abrir o projeto e incluir um <code class="language-console highlighter-rouge"><span class="go">Data Flow Task</span></code>, note que um lápis com as mudanças pendentes de “commit” aparecem com o número marcado 9 (indicando a quantidade de mudanças comparadas com a versão no final no gitlab).</p>
+
+<p><img src="/assets/img/2024-08-25-utilizando-o-git-em-projetos-SSIS/2025-01-07_11-22.png" alt="Criar Projeto" /></p>
+
+<p>Existem algumas considerações que devemos nos atentar para utilizar o Visual Studio da forma correta.</p>
+
+<p>O fluxo que devemos sempre nos atentar é:</p>
+
+<pre><code class="language-mermaid">flowchart LR
+  A[Abrir Solution] --&gt; B[pull]
+  B --&gt; C[mudanças]
+  C --&gt; D[add]
+  D --&gt; E[commit]
+  E --&gt; F[push]
+  F --&gt; G[Fechar Solution]
+</code></pre>
+
+<p>Ao tentar realizar o primeiro “commit”, este erro vai aparecer na tela, pois será preciso fazer uma ação no marcador 1 (pasta oculta .vs)</p>
+
+<p><img src="/assets/img/2024-08-25-utilizando-o-git-em-projetos-SSIS/2025-01-07_14-18.png" alt="error commit" style="max-width: 556px" /></p>
+
+<p>Este erro ocorre porque a pasta oculta <strong>.vs</strong> não pode ser versionada, pois é uma pasta temporária criada pelo Visual Studio e não precisa ser salva. Para resolver temos que criar um arquivo <code class="language-console highlighter-rouge"><span class="go">.gitignore</span></code> clicando no item marcado abaixo:</p>
+
+<p><img src="/assets/img/2024-08-25-utilizando-o-git-em-projetos-SSIS/2025-01-07_14-21.png" alt="commit" style="max-width: 556px" /></p>
+
+<p>Note que agora o arquivo <code class="language-console highlighter-rouge"><span class="go">.gitignore</span></code> foi criado no diretório versionado.</p>
+
+<p><img src="/assets/img/2024-08-25-utilizando-o-git-em-projetos-SSIS/2025-01-07_14-27.png" alt="gitignore" style="max-width: 656px" /></p>
+
+<p>Agora precisamos incluir a pasta nova ao repositório usando o “git add” para itens novos conforme o botão abaixo:</p>
+
+<p><img src="/assets/img/2024-08-25-utilizando-o-git-em-projetos-SSIS/2025-01-07_14-47.png" alt="push" style="max-width: 556px" /></p>
+
+<p>Para finalizarmos o fluxo, depois de ter feito toda a mudança no projeto é hora de fazer o <code class="language-console highlighter-rouge"><span class="go">git push</span></code>, que é onde o código vai para o Gitlab e passa a ser versionado. Para realizar esta opção é só clicar no botão mostrado abaixo:</p>
+
+<p><img src="/assets/img/2024-08-25-utilizando-o-git-em-projetos-SSIS/2025-01-07_14-31.png" alt="add" style="max-width: 556px" /></p>
+
+<p class="bubble-warning">Não se esqueça de incluir um comentário para o commit realizado!</p>
+
+<p>Com isso uma mensagem de êxito aparece dizendo que o código foi enviado ao “origin/master”</p>
+
+<p><img src="/assets/img/2024-08-25-utilizando-o-git-em-projetos-SSIS/2025-01-07_15-27.png" alt="add" style="max-width: 456px" /></p>
+
+<p>Agora os arquivos estão no repositório do Gitlab e podemos visualizar as branchs, commits e alterações de código.</p>
+
+<p><img src="/assets/img/2024-08-25-utilizando-o-git-em-projetos-SSIS/2025-01-07_15-31.png" alt="Arquivos estão no gitlab" /></p>
+
+<h2 id="explorando-um-pouco-mais">Explorando um pouco mais!!</h2>
+
+<p>Editei o projeto incluir duas ferramentas do SSIS - “Flat File Source” e um “OLE DB Destination”. Depois dessa inclusão notem que o lápis passa a mostrar 1 alteração e um marcador no Pacote “Package.dtsx” é assinalado.</p>
+
+<p><img src="/assets/img/2024-08-25-utilizando-o-git-em-projetos-SSIS/2025-01-07_16-03.png" alt="Mudanças" /></p>
+
+<p>Ao clicar no lápis, é só escrever um comentário, fazer um commit e logo depois um push, conforme o fluxo mostrado.</p>
+
+<pre><code class="language-mermaid">flowchart LR
+  A[Abrir] --&gt; B[pull]
+  B --&gt; C[mudanças]
+  C --&gt; D[add]
+  D --&gt; E[commit]
+  E --&gt; F[push]
+  F --&gt; G[Fechar]
+</code></pre>
+
+<p>Logo após fazer o push, o lápis volta a apontar 0 nas alterações, ou seja, está no repositório outra mudança feita. Veja a árvore de commits logo abaixo:</p>
+
+<p><img src="/assets/img/2024-08-25-utilizando-o-git-em-projetos-SSIS/2025-01-07_16-08.png" alt="Árvore de Commits" /></p>
+
+<p>Podemos agora voltar para a versão anterior caso exista algum equívoco na mudança do projeto clicando em “Exibir todas as confirmações” e clicando em Reverter para a versão escolhida.</p>
+
+<p><img src="/assets/img/2024-08-25-utilizando-o-git-em-projetos-SSIS/2025-01-07_16-14.png" alt="exibir confirmações" /></p>
+
+<p><img src="/assets/img/2024-08-25-utilizando-o-git-em-projetos-SSIS/2025-01-07_16-16.png" alt="exibir confirmações" /></p>
+
+<p>Com isso é possível voltar para cada passo das versões do projeto, sem contar que podemos também utilizar branchs e dividir funcionalidades a serem implementadas por equipes diferentes no mesmo projeto.</p>
+
+<p>Gostou da dica?</p>
+
+<p>Aventure-se!!!</p>
+
+    </section>
+
+    <section class="post-actions">
+      <span class="post-tags">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-tag"
+          viewBox="0 0 16 16">
+          <path d="M6 4.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m-1 0a.5.5 0 1 0-1 0 .5.5 0 0 0 1 0" />
+          <path
+            d="M2 1h4.586a1 1 0 0 1 .707.293l7 7a1 1 0 0 1 0 1.414l-4.586 4.586a1 1 0 0 1-1.414 0l-7-7A1 1 0 0 1 1 6.586V2a1 1 0 0 1 1-1m0 5.586 7 7L13.586 9l-7-7H2z" />
+        </svg>
+        <span>
+  
+  
+  <a href="https://tchuqui.github.io/tag/git">git</a>
+  &nbsp;
+  
+  <a href="https://tchuqui.github.io/tag/ssis">ssis</a>
+  
+  
+</span>
+
+      </span>
+      <span class="share-post">
+        <span>Share:</span>
+        <ul>
+  <li onclick="toShare(event)" aria-label="Whatsapp">
+    <i class="whatsapp fa-brands fa-square-whatsapp"></i>
+  </li>
+  <li onclick="toShare(event)" aria-label="LinkedIn">
+    <i class="linkedin fa-brands fa-linkedin"></i>
+  </li>
+  <li onclick="toShare(event)" aria-label="Mastodon">
+    <i class="mastodon fa-brands fa-mastodon"></i>
+  </li>
+  <li onclick="toShare(event)" aria-label="Telegram">
+    <i class="telegram fa-brands fa-telegram"></i>
+  </li>
+  <li onclick="toShare(event)" aria-label="Reddit">
+    <i class="reddit fa-brands fa-square-reddit"></i>
+  </li>
+  <li onclick="toShare(event)" aria-label="Pocket">
+    <i class="pocket fa-brands fa-get-pocket"></i>
+  </li>
+  <li onclick="toShare(event)" title="Copy Url" aria-label="Copy Url">
+    <i class="fa-solid fa-share-nodes"></i>
+  </li>
+</ul>
+      </span>
+    </section>
+
+    
+
+    <section>
+      <footer class="footer">
+  <!-- Previous e Next Post -->
+  <nav class="post-navigation" aria-label="Post Navigation">
+    
+    <div class="btn btn-outline-primary disabled" aria-label="">
+      <p>-</p>
+    </div>
+    
+
+    
+    <div class="btn btn-outline-primary disabled" aria-label="">
+      <p>-</p>
+    </div>
+    
+  </nav>
+</footer>
+
+<script src="https://unpkg.com/mermaid@10.7.0/dist/mermaid.min.js"></script>
+<script>
+  (function () {
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: "neutral",
+    });
+    window.mermaid.init(
+      undefined,
+      document.querySelectorAll(".language-mermaid")
+    );
+  })();
+</script>
+    </section>
+
+  </article>
+
+  <aside class="post-panel">
+  <section class="last-posts">
+  <h2>Últimas Publicações</h2>
+  <ul>
+    
+    <li>
+      <a href="https://tchuqui.github.io/utilizando-o-git-em-projetos-SSIS">Utilizando o Git em projetos SSIS</a>
+    </li>
+    
+  </ul>
+</section>
+
+  <section class="toc">
+  <h2>Conteúdo</h2>
+  <ul id="toc" class="section-nav">
+<li class="toc-entry toc-h2"><a href="#o-que-é-o-git">O que é o GIT?</a></li>
+<li class="toc-entry toc-h2"><a href="#versionamento">Versionamento</a></li>
+<li class="toc-entry toc-h2"><a href="#ssis-sql-server-integration-services">SSIS (SQL Server Integration Services)</a></li>
+<li class="toc-entry toc-h2"><a href="#tutorial">Tutorial</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#preparação-do-gitlab">Preparação do Gitlab</a></li>
+<li class="toc-entry toc-h3"><a href="#preparação-do-diretório">Preparação do diretório</a></li>
+<li class="toc-entry toc-h3"><a href="#vincular-o-diretório-ao-gitlab">Vincular o diretório ao Gitlab</a></li>
+<li class="toc-entry toc-h3"><a href="#criação-do-projeto-no-visual-studio">Criação do projeto no Visual Studio</a></li>
+<li class="toc-entry toc-h3"><a href="#entendendo-o-uso-do-git-no-visual-studio">Entendendo o uso do git no Visual Studio</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#explorando-um-pouco-mais">Explorando um pouco mais!!</a></li>
+</ul>
+</section>
+</aside>
+</main>
+
+
+  <a href="#back-to-top" class="back-to-top">
+  <i class="fa-solid fa-circle-arrow-up"></i>
+</a>
+
+</body>
+
+</html>

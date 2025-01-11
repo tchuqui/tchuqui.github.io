@@ -1,0 +1,31 @@
+- brand: qlik
+  name: Qlik Sense
+  color: 009900
+
+- brand: Docker
+  name: Docker
+  color: 119fed
+
+- brand: kubernetes
+  name: Kubernetes
+  color: 3333ff
+
+- brand: GitHub
+  name: GitHub
+  color: 080808
+
+- brand: GitLab
+  name: GitLab
+  color: e34930
+
+- brand: apachetomcat
+  name: Apache Tomcat
+  color: 4c0099
+
+- brand: Linux
+  name: Linux
+  color: ffcc10
+
+- brand: Windows
+  name: Windows
+  color: 0199be
