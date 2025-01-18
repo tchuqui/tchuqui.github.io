@@ -150,6 +150,4 @@ Legal, né?
 
 O céu é o limite para a sua criatividade.
 
-Aventure-se!!!
-
 ## Referência
