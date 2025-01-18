@@ -8,9 +8,9 @@ lang: pt-BR
 timezone: America/Campo_Grande # Change to your timezone - https://kevinnovak.github.io/Time-Zone-Picker/
 
 title: Thadeu Chuqui
-tagline: Database Administrator | Data Engineer
-description: Um blog sobre dicas de Banco de Dados e Engenharia de Dados.
-avatar: "assets/img/avatar/avatar.jpg" # The avatar on sidebar
+tagline: Data Engineer | Database Administrator
+description: Um blog sobre dicas profissionais na área de Dados.
+avatar: "assets/img/avatar/avatar.png" # The avatar on sidebar
 
 # Social profiles
 email: tchuqui@gmail.com
@@ -19,7 +19,7 @@ linkedin: thadeuchuqui
 mastodon:
   instance: mastodon.social
   user: tchuqui
-instagram: tchuqui1
+instagram: thadeuchuqui
 youtube: thadeuchuqui
 
 disqus-username: https-tchuqui-github-io
