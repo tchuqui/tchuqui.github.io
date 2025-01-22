@@ -16,13 +16,13 @@ Neste artigo do [blog](https://tchuqui.github.io/) vou mostrar de maneira fácil
 
 ## O que é o GIT?
 
-O [git](https://git-scm.com/) é um sistema de controle de versão de "código fonte", desenvolvido para projetar programas de pequeno à grande porte com velocidade e eficiência. O git segue a linha de "código aberto", apoio da comunidade e foi desenvolvido por `Linus Torvalds`, o criador do sistema operacional [Linux](https://www.linux.org/). 
+O [git](https://git-scm.com/) é um sistema de controle de versão de "código-fonte", desenvolvido para projetar programas de pequeno à grande porte com velocidade e eficiência. O git segue a linha de "código aberto", apoio da comunidade e foi desenvolvido por `Linus Torvalds`, o criador do sistema operacional [Linux](https://www.linux.org/). 
 
 > A ferramenta é disponibilizada gratuitamente para o publico
 
 ## Versionamento
 
-Uma ferramenta de versionamento controla cada alteração com atualizações criptografadas, que são salvas em um servidor formando um histórico imutável e permanente das versões. Este mecanismo é uma alternativa eficiente de backup e agilidade para o "código fonte", evitando desastres como a perda de código entre as equipes.
+Uma ferramenta de versionamento controla cada alteração com atualizações criptografadas, salvas em um servidor formando um histórico imutável e permanente das versões. Este mecanismo é uma alternativa eficiente de backup e agilidade para o "código-fonte", evitando desastre como a perda de código entre as equipes.
 
 > Vale ressaltar que é de fácil aprendizagem e utilização.
 
@@ -149,7 +149,7 @@ Agora os arquivos estão no repositório do Gitlab e podemos visualizar as branc
 
 ## Explorando um pouco mais!!
 
-Editei o projeto incluir duas ferramentas do SSIS - "Flat File Source" e um "OLE DB Destination". Depois dessa inclusão notem que o lápis passa a mostrar 1 alteração e um marcador no Pacote "Package.dtsx" é assinalado.
+Editei o projeto incluir duas ferramentas do SSIS - "Flat File Source" e um "OLE DB Destination". Depois desta inclusão notem que o lápis passa a mostrar 1 alteração e um marcador no Pacote "Package.dtsx" é assinalado.
 
 ![Mudanças](/assets/img/2024-08-25-utilizando-o-git-em-projetos-SSIS/2025-01-07_16-03.png)
 
