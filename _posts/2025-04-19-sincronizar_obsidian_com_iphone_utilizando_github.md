@@ -184,7 +184,7 @@ Ao terminar, fica 100%
 
 <p style="text-align:center"><img src="/assets/img/2025-04-19-sincronizar_obsidian_com_iphone_utilizando_github/whats10.jpeg" align="center" alt="git plugin" style="max-width: 356px"></p>
 
-Com isso, o repositório já está em seu celular, especificamente na pasta do Obsidian ocupando o espaço de sua conta no [Icloud](https://www.icloud.com/)]. Abra o aplicativo Obsidian e veja está com o conteúdo do seu cofre.
+Com isso, o repositório já está em seu celular, especificamente na pasta do Obsidian ocupando o espaço de sua conta no [Icloud](https://www.icloud.com/). Abra o aplicativo Obsidian e veja se está com o conteúdo do seu cofre.
 
 <p style="text-align:center"><img src="/assets/img/2025-04-19-sincronizar_obsidian_com_iphone_utilizando_github/whats12.jpeg" align="center" alt="git plugin" style="max-width: 356px"></p>
 
